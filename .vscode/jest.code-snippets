@@ -1,0 +1,13 @@
+{
+	"Test Body snippet": {
+		"prefix": "jtest",
+		"body": [
+			"describe('$1', () => {",
+			"\ttest('$2', () => {",
+			"\t",
+			"\t})",
+			"})"
+		],
+		"description": "Jest Test Body snippet"
+	},
+}
