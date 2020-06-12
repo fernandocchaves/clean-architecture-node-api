@@ -14,6 +14,13 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub();
 };
 
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    email: 'any_email@mail.com',
+    password: 'any_password',
+  },
+});
+
 interface SutTypes {
   sut: LoginController;
   emailValidatorStub: EmailValidator;
@@ -58,14 +65,7 @@ describe('LoginController', () => {
 
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false);
 
-    const httpRequest: HttpRequest = {
-      body: {
-        email: 'any_email@mail.com',
-        password: 'any_password',
-      },
-    };
-
-    const httpResponse = await sut.handle(httpRequest);
+    const httpResponse = await sut.handle(makeFakeRequest());
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('email')));
   });
 
@@ -74,14 +74,7 @@ describe('LoginController', () => {
 
     const isvalidSpy = jest.spyOn(emailValidatorStub, 'isValid');
 
-    const httpRequest: HttpRequest = {
-      body: {
-        email: 'any_email@mail.com',
-        password: 'any_password',
-      },
-    };
-
-    await sut.handle(httpRequest);
+    await sut.handle(makeFakeRequest());
     expect(isvalidSpy).toHaveBeenCalledWith('any_email@mail.com');
   });
 });
