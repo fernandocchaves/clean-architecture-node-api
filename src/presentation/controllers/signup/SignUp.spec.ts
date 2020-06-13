@@ -9,6 +9,7 @@ import {
   AccountModel,
   AddAccount,
   AddAccountModel,
+  Validation,
 } from './SignUpProtocols';
 import { HttpRequest } from '../../protocols';
 import { ok, serverError, badRequest } from '../../helpers/HttpHelpers';
@@ -23,7 +24,7 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub();
 };
 
-const makeAddAccountStub = (): AddAccount => {
+const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add(account: AddAccountModel): Promise<AccountModel> {
       return new Promise(resolve => resolve(makeFakeAccount()));
@@ -31,6 +32,16 @@ const makeAddAccountStub = (): AddAccount => {
   }
 
   return new AddAccountStub();
+};
+
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate(input: any): Error {
+      return null;
+    }
+  }
+
+  return new ValidationStub();
 };
 
 const makeFakeAccount = (): AccountModel => ({
@@ -52,17 +63,24 @@ const makeFakeRequest = (): HttpRequest => ({
 interface SutTypes {
   sut: SignUpController;
   emailValidatorStub: EmailValidator;
+  validationStub: Validation;
   addAccountStub: AddAccount;
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator();
-  const addAccountStub = makeAddAccountStub();
-  const sut = new SignUpController(emailValidatorStub, addAccountStub);
+  const addAccountStub = makeAddAccount();
+  const validationStub = makeValidation();
+  const sut = new SignUpController(
+    emailValidatorStub,
+    addAccountStub,
+    validationStub,
+  );
 
   return {
     sut,
     emailValidatorStub,
+    validationStub,
     addAccountStub,
   };
 };
@@ -198,5 +216,14 @@ describe('SignUp Controller', () => {
 
     const httpResponse = await sut.handle(makeFakeRequest());
     expect(httpResponse).toEqual(ok(makeFakeAccount()));
+  });
+
+  test('Should call Validator with correct values', async () => {
+    const { sut, validationStub } = makeSut();
+    const validateSpy = jest.spyOn(validationStub, 'validate');
+
+    const httpRequest = makeFakeRequest();
+    await sut.handle(httpRequest);
+    expect(validateSpy).toBeCalledWith(httpRequest.body);
   });
 });
