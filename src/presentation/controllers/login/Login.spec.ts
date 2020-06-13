@@ -3,6 +3,7 @@ import {
   badRequest,
   serverError,
   unauthorized,
+  ok,
 } from '../../helpers/HttpHelpers';
 import { MissingParamError, InvalidParamError } from '../../errors';
 import { EmailValidator, HttpRequest, Authentication } from './LoginProtocols';
@@ -136,5 +137,12 @@ describe('LoginController', () => {
 
     await sut.handle(makeFakeRequest());
     expect(authSpy).toHaveBeenCalledWith('any_email@mail.com', 'any_password');
+  });
+
+  test('Should return 200 if valid credentials are provided', async () => {
+    const { sut } = makeSut();
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }));
   });
 });

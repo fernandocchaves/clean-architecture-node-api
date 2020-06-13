@@ -10,6 +10,7 @@ import {
   badRequest,
   serverError,
   unauthorized,
+  ok,
 } from '../../helpers/HttpHelpers';
 
 export class LoginController implements Controller {
@@ -41,6 +42,8 @@ export class LoginController implements Controller {
       if (!accessToken) {
         return unauthorized();
       }
+
+      return ok({ accessToken });
     } catch (error) {
       return serverError(error);
     }
