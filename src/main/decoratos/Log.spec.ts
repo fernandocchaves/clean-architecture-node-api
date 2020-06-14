@@ -4,7 +4,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '../../presentation/protocols';
-import { serverError, ok } from '../../presentation/helpers/HttpHelpers';
+import { serverError, ok } from '../../presentation/helpers/http/HttpHelpers';
 import { LogErrorRespository } from '../../data/protocols/LogErrorRespository';
 import { AccountModel } from '../../domain/models/Account';
 
