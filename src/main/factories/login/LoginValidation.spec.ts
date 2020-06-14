@@ -1,7 +1,7 @@
 import { makeLoginValidation } from './LoginValidation';
 import { ValidationComposite } from '../../../presentation/helpers/validations/ValidationComposite';
 import { RequiredFieldValidation } from '../../../presentation/helpers/validations/RequiredFieldValidation';
-import { Validation } from '../../../presentation/helpers/validations/Validation';
+import { Validation } from '../../../presentation/protocols/Validation';
 import { EmailValidation } from '../../../presentation/helpers/validations/EmailValidation';
 import { EmailValidator } from '../../../presentation/protocols/EmailValidator';
 
