@@ -5,9 +5,11 @@ import {
 import { LoadAccountByEmailRepository } from '../../protocols/db/LoadAccountByEmailRepository';
 import { HashComparer } from '../../protocols/criptography/HashComparer';
 import { TokenGenerator } from '../../protocols/criptography/TokenGenerator';
+import { UpdateAccessTokenRepository } from '../../protocols/db/UpdateAccessTokenRepository';
 
 export class DbAuthentication implements Authentication {
   private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository;
+  private readonly updateAccessTokenRepository: UpdateAccessTokenRepository;
   private readonly hashComparer: HashComparer;
   private readonly tokenGenerator: TokenGenerator;
 
@@ -15,10 +17,12 @@ export class DbAuthentication implements Authentication {
     loadAccountByEmailRepository: LoadAccountByEmailRepository,
     hashComparer: HashComparer,
     tokenGenerator: TokenGenerator,
+    updateAccessTokenRepository: UpdateAccessTokenRepository,
   ) {
     this.loadAccountByEmailRepository = loadAccountByEmailRepository;
     this.hashComparer = hashComparer;
     this.tokenGenerator = tokenGenerator;
+    this.updateAccessTokenRepository = updateAccessTokenRepository;
   }
 
   async auth(authentication: AuthenticationModel): Promise<string> {
@@ -34,6 +38,7 @@ export class DbAuthentication implements Authentication {
 
       if (isValid) {
         const accessToken = await this.tokenGenerator.generate(account.id);
+        await this.updateAccessTokenRepository.update(account.id, accessToken);
         return accessToken;
       }
     }
