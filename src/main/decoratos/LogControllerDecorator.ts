@@ -6,13 +6,10 @@ import {
 import { LogErrorRespository } from '../../data/protocols/db/log/LogErrorRespository';
 
 export class LogControllerDecorator implements Controller {
-  private readonly controller: Controller;
-  private readonly logErrorRepository: LogErrorRespository;
-
-  constructor(controller: Controller, logErrorRepository: LogErrorRespository) {
-    this.controller = controller;
-    this.logErrorRepository = logErrorRepository;
-  }
+  constructor(
+    private readonly controller: Controller,
+    private readonly logErrorRepository: LogErrorRespository,
+  ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const httpResponse = await this.controller.handle(httpRequest);
