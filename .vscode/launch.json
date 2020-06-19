@@ -7,15 +7,10 @@
     {
       "type": "node",
       "request": "attach",
-      "protocol": "inspector",
-      "restart": true,
-      "name": "Debug",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+      "name": "Docker: Attach to Node",
+      "remoteRoot": "/usr/src/clean-node-api",
+      "port": 9222,
+      "restart": true
     }
   ]
 }
