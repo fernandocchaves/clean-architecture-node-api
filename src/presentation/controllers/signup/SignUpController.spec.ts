@@ -1,5 +1,5 @@
 import { SignUpController } from './SignUpController';
-import { MissingParamError, ServerError } from '../../errors';
+import { MissingParamError, ServerError, EmailInUseError } from '../../errors';
 import {
   AccountModel,
   AddAccount,
@@ -9,7 +9,12 @@ import {
   AuthenticationModel,
 } from './SignUpControllerProtocols';
 import { HttpRequest } from '../../protocols';
-import { ok, serverError, badRequest } from '../../helpers/http/HttpHelpers';
+import {
+  ok,
+  serverError,
+  badRequest,
+  forbidden,
+} from '../../helpers/http/HttpHelpers';
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
@@ -109,7 +114,19 @@ describe('SignUp Controller', () => {
     const { sut } = makeSut();
 
     const httpResponse = await sut.handle(makeFakeRequest());
-    expect(httpResponse).toEqual(ok(makeFakeAccount()));
+    expect(httpResponse).toEqual(
+      ok({ account: makeFakeAccount(), accessToken: 'any_token' }),
+    );
+  });
+
+  test('Should return 403 AddAccount returns null', async () => {
+    const { sut, addAccountStub } = makeSut();
+    jest
+      .spyOn(addAccountStub, 'add')
+      .mockReturnValueOnce(new Promise(resolve => resolve(null)));
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+    expect(httpResponse).toEqual(forbidden(new EmailInUseError()));
   });
 
   test('Should call Validator with correct values', async () => {
