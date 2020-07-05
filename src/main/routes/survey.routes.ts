@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { adapterRoute } from '../adapters/express/ExpressRoutesAdapter';
-import { makeAddSurveyContoller } from '../factories/controllers/add-survey/AddSurveyControllerFactory';
+import { adapterRoute } from '../adapters/ExpressRoutesAdapter';
+import { makeAddSurveyContoller } from '../factories/controllers/survey/add-survey/AddSurveyControllerFactory';
 
 export default (router: Router): void => {
   router.post('/surveys', adapterRoute(makeAddSurveyContoller()));
