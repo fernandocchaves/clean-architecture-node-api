@@ -40,10 +40,10 @@ const makeLoadSurveysRepository = (): LoadSurveysRepository => {
   return new LoadSurveysRepositoryStub();
 };
 
-interface SutTypes {
+type SutTypes = {
   sut: DbLoadSurvey;
   loadSurveysRepositoryStub: LoadSurveysRepository;
-}
+};
 
 const makeSut = (): SutTypes => {
   const loadSurveysRepositoryStub = makeLoadSurveysRepository();

@@ -50,11 +50,11 @@ const makeServerError = (): HttpResponse => {
   return serverError(fakeError);
 };
 
-interface SutTypes {
+type SutTypes = {
   sut: LogControllerDecorator;
   logErrorRepositoryStub: LogErrorRespository;
   controllerStub: Controller;
-}
+};
 
 const makeSut = (): SutTypes => {
   const controllerStub = makeController();

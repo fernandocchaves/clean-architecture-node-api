@@ -66,12 +66,12 @@ const makeFakeRequest = (): HttpRequest => ({
   },
 });
 
-interface SutTypes {
+type SutTypes = {
   sut: SignUpController;
   validationStub: Validation;
   addAccountStub: AddAccount;
   authenticationStub: Authentication;
-}
+};
 
 const makeSut = (): SutTypes => {
   const addAccountStub = makeAddAccount();
