@@ -1,4 +1,4 @@
-import { MongoHelper } from '../helpers/MongoHelper';
+import { MongoHelper } from '@/infra/db/mongodb/helpers/MongoHelper';
 import { SurveyMongoRepository } from './SurveyMongoRepository';
 import { Collection } from 'mongodb';
 

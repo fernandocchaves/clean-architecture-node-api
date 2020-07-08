@@ -10,7 +10,7 @@ import {
   badRequest,
   serverError,
   noContent,
-} from '../../../helpers/http/HttpHelpers';
+} from '@/presentation/helpers/http/HttpHelpers';
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {

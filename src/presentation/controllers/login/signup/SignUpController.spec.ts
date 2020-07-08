@@ -3,8 +3,8 @@ import {
   MissingParamError,
   ServerError,
   EmailInUseError,
-} from '../../../errors';
-import { HttpRequest } from '../../../protocols';
+} from '@/presentation/errors';
+import { HttpRequest } from '@/presentation/protocols';
 import {
   AccountModel,
   AddAccount,
@@ -18,7 +18,7 @@ import {
   serverError,
   badRequest,
   forbidden,
-} from '../../../helpers/http/HttpHelpers';
+} from '@/presentation/helpers/http/HttpHelpers';
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {

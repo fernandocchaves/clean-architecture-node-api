@@ -1,14 +1,14 @@
 import { LoginController } from './LoginController';
 import { HttpRequest, Authentication } from './LoginControllerProtocols';
-import { Validation } from '../signup/SignUpControllerProtocols';
-import { MissingParamError } from '../../../errors';
-import { AuthenticationModel } from '../../../../domain/usecases/Authentication';
+import { Validation } from '@/presentation/controllers/login/signup/SignUpControllerProtocols';
+import { MissingParamError } from '@/presentation/errors';
+import { AuthenticationModel } from '@/domain/usecases/Authentication';
 import {
   badRequest,
   serverError,
   unauthorized,
   ok,
-} from '../../../helpers/http/HttpHelpers';
+} from '@/presentation/helpers/http/HttpHelpers';
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
