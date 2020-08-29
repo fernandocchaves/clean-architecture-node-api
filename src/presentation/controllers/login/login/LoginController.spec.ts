@@ -2,7 +2,7 @@ import { LoginController } from './LoginController';
 import { HttpRequest, Authentication } from './LoginControllerProtocols';
 import { Validation } from '@/presentation/controllers/login/signup/SignUpControllerProtocols';
 import { MissingParamError } from '@/presentation/errors';
-import { AuthenticationModel } from '@/domain/usecases/Authentication';
+import { AuthenticationModel } from '@/domain/usecases/account/Authentication';
 import {
   badRequest,
   serverError,

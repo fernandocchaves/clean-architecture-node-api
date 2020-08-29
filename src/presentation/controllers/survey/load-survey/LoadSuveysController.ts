@@ -3,8 +3,12 @@ import {
   HttpRequest,
   HttpResponse,
 } from './LoadSurveyControllerProtocols';
-import { LoadSurveys } from '../../../../domain/usecases/LoadSurveys';
-import { ok, serverError, noContent } from '../../../helpers/http/HttpHelpers';
+import { LoadSurveys } from '@/domain/usecases/survey/LoadSurveys';
+import {
+  ok,
+  serverError,
+  noContent,
+} from '@/presentation/helpers/http/HttpHelpers';
 
 export class LoadSuveysController implements Controller {
   constructor(private readonly loadSurveys: LoadSurveys) {}
