@@ -1,27 +1,8 @@
 import MockDate from 'mockdate';
 import { DbAddSurvey } from './DbAddSurvey';
-import { AddSurveyParams, AddSurveyRepository } from './DbAddSurveyProtocols';
-
-const makeFakeSuveyData = (): AddSurveyParams => ({
-  question: 'any_question',
-  answers: [
-    {
-      image: 'any_image',
-      answer: 'any_answer',
-    },
-  ],
-  date: new Date(),
-});
-
-const makeAddSurveyRepository = (): AddSurveyRepository => {
-  class AddSurveyRepositoryStub implements AddSurveyRepository {
-    async add(surveyData: AddSurveyParams): Promise<void> {
-      return new Promise(resolve => resolve());
-    }
-  }
-
-  return new AddSurveyRepositoryStub();
-};
+import { AddSurveyRepository } from './DbAddSurveyProtocols';
+import { throwError, mockAddSuveyParams } from '@/domain/test';
+import { mockAddSurveyRepository } from '@/data/test';
 
 type SutTypes = {
   sut: DbAddSurvey;
@@ -29,7 +10,7 @@ type SutTypes = {
 };
 
 const makeSut = (): SutTypes => {
-  const addSurveyRepositoryStub = makeAddSurveyRepository();
+  const addSurveyRepositoryStub = mockAddSurveyRepository();
   const sut = new DbAddSurvey(addSurveyRepositoryStub);
   return {
     sut,
@@ -49,7 +30,7 @@ describe('DbAddSurvey Usecase', () => {
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut();
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add');
-    const suveyData = makeFakeSuveyData();
+    const suveyData = mockAddSuveyParams();
     await sut.add(suveyData);
 
     expect(addSpy).toHaveBeenCalledWith(suveyData);
@@ -59,11 +40,9 @@ describe('DbAddSurvey Usecase', () => {
     const { sut, addSurveyRepositoryStub } = makeSut();
     jest
       .spyOn(addSurveyRepositoryStub, 'add')
-      .mockReturnValueOnce(
-        new Promise((resolve, reject) => reject(new Error())),
-      );
+      .mockImplementationOnce(throwError);
 
-    const promise = sut.add(makeFakeSuveyData());
+    const promise = sut.add(mockAddSuveyParams());
     await expect(promise).rejects.toThrow();
   });
 });
