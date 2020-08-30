@@ -1,8 +1,8 @@
 Arguments: 
-  /home/fernandocchaves/.nvm/versions/node/v12.16.1/bin/node /home/fernandocchaves/.nvm/versions/node/v12.16.1/bin/yarn add coverrals -D
+  /home/fernandocchaves/.nvm/versions/node/v12.16.1/bin/node /home/fernandocchaves/.nvm/versions/node/v12.16.1/bin/yarn add swagger-ui-express
 
 PATH: 
-  /home/fernandocchaves/.yarn/bin:/home/fernandocchaves/.config/yarn/global/node_modules/.bin:/home/fernandocchaves/.yarn/bin:/home/fernandocchaves/.config/yarn/global/node_modules/.bin:/home/fernandocchaves/.nvm/versions/node/v12.16.1/bin:/home/fernandocchaves/.zinit/polaris/bin:/home/fernandocchaves/bin:/usr/share/rvm/gems/ruby-2.7.0/bin:/usr/share/rvm/gems/ruby-2.7.0@global/bin:/usr/share/rvm/rubies/ruby-2.7.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/snap/bin:/usr/share/rvm/bin:/home/fernandocchaves/bin:~/android-studio/bin:/home/fernandocchaves/Android/Sdk/tools:/home/fernandocchaves/Android/Sdk/platform-tools:/home/fernandocchaves/bin:~/android-studio/bin:/home/fernandocchaves/Android/Sdk/tools:/home/fernandocchaves/Android/Sdk/platform-tools
+  /home/fernandocchaves/.yarn/bin:/home/fernandocchaves/.config/yarn/global/node_modules/.bin:/home/fernandocchaves/.yarn/bin:/home/fernandocchaves/.config/yarn/global/node_modules/.bin:/home/fernandocchaves/.nvm/versions/node/v12.16.1/bin:/home/fernandocchaves/.zinit/polaris/bin:/home/fernandocchaves/.local/bin:/home/fernandocchaves/bin:/usr/share/rvm/gems/ruby-2.7.0/bin:/usr/share/rvm/gems/ruby-2.7.0@global/bin:/usr/share/rvm/rubies/ruby-2.7.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/snap/bin:/usr/share/rvm/bin:/home/fernandocchaves/bin:~/android-studio/bin:/home/fernandocchaves/Android/Sdk/tools:/home/fernandocchaves/Android/Sdk/platform-tools:/home/fernandocchaves/bin:~/android-studio/bin:/home/fernandocchaves/Android/Sdk/tools:/home/fernandocchaves/Android/Sdk/platform-tools
 
 Yarn version: 
   1.22.4
@@ -14,28 +14,19 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/coverrals: Not found
-      at Request.params.callback [as _callback] (/home/fernandocchaves/.nvm/versions/node/v12.16.1/lib/node_modules/yarn/lib/cli.js:66987:18)
-      at Request.self.callback (/home/fernandocchaves/.nvm/versions/node/v12.16.1/lib/node_modules/yarn/lib/cli.js:140748:22)
-      at Request.emit (events.js:311:20)
-      at Request.<anonymous> (/home/fernandocchaves/.nvm/versions/node/v12.16.1/lib/node_modules/yarn/lib/cli.js:141720:10)
-      at Request.emit (events.js:311:20)
-      at IncomingMessage.<anonymous> (/home/fernandocchaves/.nvm/versions/node/v12.16.1/lib/node_modules/yarn/lib/cli.js:141642:12)
-      at Object.onceWrapper (events.js:417:28)
-      at IncomingMessage.emit (events.js:323:22)
-      at endReadableNT (_stream_readable.js:1204:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:64:26)
 
 npm manifest: 
   {
     "name": "clean-node-api",
-    "version": "1.2.1",
+    "version": "2.2.0",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
       "start": "node dist/main/server.js",
       "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
-      "build": "rimraf dist && tsc",
+      "build": "rimraf dist && tsc -p tsconfig.build.json",
       "dev": "sucrase-node src/main/server.ts",
       "up": "yarn build && sudo docker-compose up",
       "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
@@ -44,6 +35,7 @@ npm manifest:
       "test:integration": "yarn test -- -c jest-integration-config.js",
       "test:staged": "yarn test -- --findRelatedTests",
       "test:ci": "yarn test -- --coverage",
+      "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
       "test:clear:cache": "jest --clearCache"
     },
     "devDependencies": {
@@ -57,6 +49,7 @@ npm manifest:
       "@types/supertest": "^2.0.9",
       "@types/validator": "^13.0.0",
       "@typescript-eslint/eslint-plugin": "^3.0.2",
+      "coveralls": "^3.1.0",
       "eslint": "7",
       "eslint-config-prettier": "^6.11.0",
       "eslint-config-standard-with-typescript": "^18.0.2",
@@ -69,6 +62,7 @@ npm manifest:
       "husky": "^4.2.5",
       "jest": "^26.0.1",
       "lint-staged": "^10.2.6",
+      "mockdate": "^3.0.2",
       "prettier": "^2.0.5",
       "rimraf": "^3.0.2",
       "sucrase": "^3.15.0",
@@ -81,12 +75,16 @@ npm manifest:
       "bcrypt": "^5.0.0",
       "express": "^4.17.1",
       "jsonwebtoken": "^8.5.1",
+      "module-alias": "^2.2.2",
       "mongodb": "^3.5.8",
       "nodemon": "^2.0.4",
       "validator": "^13.0.0"
     },
     "engines": {
       "node": "12.x"
+    },
+    "_moduleAliases": {
+      "@": "dist"
     }
   }
 
@@ -1772,6 +1770,17 @@ Lockfile:
       parse-json "^5.0.0"
       path-type "^4.0.0"
       yaml "^1.7.2"
+  
+  coveralls@^3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/coveralls/-/coveralls-3.1.0.tgz#13c754d5e7a2dd8b44fe5269e21ca394fb4d615b"
+    integrity sha512-sHxOu2ELzW8/NC1UP5XVLbZDzO4S3VxfFye3XYCznopHy02YjNkHcj5bKaVw2O7hVaBdBjEdQGpie4II1mWhuQ==
+    dependencies:
+      js-yaml "^3.13.1"
+      lcov-parse "^1.0.0"
+      log-driver "^1.2.7"
+      minimist "^1.2.5"
+      request "^2.88.2"
   
   cross-spawn@^6.0.0:
     version "6.0.5"
@@ -4068,6 +4077,11 @@ Lockfile:
     dependencies:
       package-json "^6.3.0"
   
+  lcov-parse@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/lcov-parse/-/lcov-parse-1.0.0.tgz#eb0d46b54111ebc561acb4c408ef9363bdc8f7e0"
+    integrity sha1-6w1GtUER68VhrLTECO+TY73I9+A=
+  
   leven@^3.1.0:
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -4221,6 +4235,11 @@ Lockfile:
     version "4.17.15"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
     integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  
+  log-driver@^1.2.7:
+    version "1.2.7"
+    resolved "https://registry.yarnpkg.com/log-driver/-/log-driver-1.2.7.tgz#63b95021f0702fedfa2c9bb0a24e7797d71871d8"
+    integrity sha512-U7KCmLdqsGHBLeWqYlFA0V0Sl6P08EE1ZrmA9cxjUE0WVqT9qnyVDPz1kzpFEP0jdJuFnasWIfSd7fsaNXkpbg==
   
   log-symbols@^4.0.0:
     version "4.0.0"
@@ -4439,6 +4458,16 @@ Lockfile:
     integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
     dependencies:
       minimist "^1.2.5"
+  
+  mockdate@^3.0.2:
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.2.tgz#a5a7bb5820da617747af424d7a4dcb22c6c03d79"
+    integrity sha512-ldfYSUW1ocqSHGTK6rrODUiqAFPGAg0xaHqYJ5tvj1hQyFsjuHpuWgWFTZWwDVlzougN/s2/mhDr8r5nY5xDpA==
+  
+  module-alias@^2.2.2:
+    version "2.2.2"
+    resolved "https://registry.yarnpkg.com/module-alias/-/module-alias-2.2.2.tgz#151cdcecc24e25739ff0aa6e51e1c5716974c0e0"
+    integrity sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==
   
   mongodb-memory-server-core@6.4.1:
     version "6.4.1"
