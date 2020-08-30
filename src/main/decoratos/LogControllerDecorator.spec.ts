@@ -12,7 +12,7 @@ import { mockLogErrorRepository } from '@/data/test';
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-      return new Promise(resolve => resolve(ok(mockAccountModel())));
+      return Promise.resolve(ok(mockAccountModel()));
     }
   }
 
@@ -77,7 +77,7 @@ describe('LogControllerDecorator', () => {
 
     jest
       .spyOn(controllerStub, 'handle')
-      .mockReturnValueOnce(new Promise(resolve => resolve(makeServerError())));
+      .mockReturnValueOnce(Promise.resolve(makeServerError()));
 
     await sut.handle(makeFakeRequest());
     expect(logSpy).toHaveBeenCalledWith('any_stack');
