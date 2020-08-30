@@ -6,7 +6,7 @@ import {
   SurveyModel,
   SaveSurveyResult,
   SurveyResultModel,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
 } from './SaveSurveyResultControllerProtocols';
 import { InvalidParamError } from '@/presentation/errors';
 import {
@@ -57,7 +57,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return new Promise(resolve => resolve(makeFakeSurveyResult()));
     }
   }

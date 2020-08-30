@@ -2,7 +2,7 @@ import { LoginController } from './LoginController';
 import { HttpRequest, Authentication } from './LoginControllerProtocols';
 import { Validation } from '@/presentation/controllers/login/signup/SignUpControllerProtocols';
 import { MissingParamError } from '@/presentation/errors';
-import { AuthenticationModel } from '@/domain/usecases/account/Authentication';
+import { AuthenticationParams } from '@/domain/usecases/account/Authentication';
 import {
   badRequest,
   serverError,
@@ -22,7 +22,7 @@ const makeValidation = (): Validation => {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authentication: AuthenticationModel): Promise<string> {
+    async auth(authentication: AuthenticationParams): Promise<string> {
       return new Promise(resolve => resolve('any_token'));
     }
   }
