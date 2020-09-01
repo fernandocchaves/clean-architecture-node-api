@@ -1,5 +1,6 @@
 export * from './LoginParamsSchema';
 export * from './SignupParamsSchema';
+export * from './AddSurveyParamsSchema';
 export * from './AccountSchema';
 export * from './ErrorSchema';
 export * from './SurveySchema';

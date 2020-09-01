@@ -8,6 +8,7 @@ import {
   SurveyAnswerSchema,
   ApiKeyAuthSchema,
   SignUpParamsSchema,
+  AddSurveyParamsSchema,
 } from './schemas';
 import {
   BadRequest,
@@ -35,7 +36,7 @@ export default {
     },
   },
   servers: [{ url: '/api' }],
-  tags: [{ name: 'Login' }, { name: 'Enquetes' }],
+  tags: [{ name: 'Login' }, { name: 'Enquete' }],
   paths: {
     '/login': LoginPath,
     '/signup': SignUpPath,
@@ -49,6 +50,7 @@ export default {
     surveyAnswer: SurveyAnswerSchema,
     survey: SurveySchema,
     surveys: SurveysSchema,
+    addSurveyParams: AddSurveyParamsSchema,
   },
   components: {
     securitySchemes: {
