@@ -7,3 +7,6 @@ export * from './SurveySchema';
 export * from './SurveysSchema';
 export * from './SurveyAnswerSchema';
 export * from './ApiKeyAuthSchema';
+export * from './SurveyResultSchema';
+export * from './SaveSurveyParamsSchema';
+export * from './SurveyResultAnswerSchema';
