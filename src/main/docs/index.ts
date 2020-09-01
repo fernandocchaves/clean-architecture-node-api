@@ -1,5 +1,13 @@
-import { LoginPath } from './paths';
-import { AccountSchema, LoginParamsSchema, ErrorSchema } from './schemas';
+import { LoginPath, SurveysPath } from './paths';
+import {
+  AccountSchema,
+  LoginParamsSchema,
+  ErrorSchema,
+  SurveySchema,
+  SurveysSchema,
+  SurveyAnswerSchema,
+  ApiKeyAuthSchema,
+} from './schemas';
 import {
   BadRequest,
   Forbidden,
@@ -26,16 +34,23 @@ export default {
     },
   },
   servers: [{ url: '/api' }],
-  tags: [{ name: 'Login' }],
+  tags: [{ name: 'Login' }, { name: 'Enquetes' }],
   paths: {
     '/login': LoginPath,
+    '/surveys': SurveysPath,
   },
   schemas: {
     account: AccountSchema,
     loginParams: LoginParamsSchema,
     error: ErrorSchema,
+    surveyAnswer: SurveyAnswerSchema,
+    survey: SurveySchema,
+    surveys: SurveysSchema,
   },
   components: {
+    securitySchemes: {
+      apiKeyAuth: ApiKeyAuthSchema,
+    },
     badRequest: BadRequest,
     unauthorized: Unauthorized,
     notFound: NotFound,
