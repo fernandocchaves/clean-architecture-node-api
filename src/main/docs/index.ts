@@ -1,4 +1,4 @@
-import { LoginPath, SurveysPath } from './paths';
+import { LoginPath, SurveysPath, SignUpPath } from './paths';
 import {
   AccountSchema,
   LoginParamsSchema,
@@ -7,6 +7,7 @@ import {
   SurveysSchema,
   SurveyAnswerSchema,
   ApiKeyAuthSchema,
+  SignUpParamsSchema,
 } from './schemas';
 import {
   BadRequest,
@@ -37,11 +38,13 @@ export default {
   tags: [{ name: 'Login' }, { name: 'Enquetes' }],
   paths: {
     '/login': LoginPath,
+    '/signup': SignUpPath,
     '/surveys': SurveysPath,
   },
   schemas: {
     account: AccountSchema,
     loginParams: LoginParamsSchema,
+    signUpParams: SignUpParamsSchema,
     error: ErrorSchema,
     surveyAnswer: SurveyAnswerSchema,
     survey: SurveySchema,
