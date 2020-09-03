@@ -3,9 +3,10 @@ import { SaveSurveyResultParams } from '@/domain/usecases/survey-result/SaveSurv
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
 import { MongoHelper, QueryBuilder } from '../helpers';
 import { ObjectID } from 'mongodb';
+import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/LoadSurveyResultRepository';
 
 export class SurveyResultMongoRespository
-  implements SaveSurveyResultRepository {
+  implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection(
       'surveyResults',
@@ -30,7 +31,7 @@ export class SurveyResultMongoRespository
     return surveuResult;
   }
 
-  private async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
+  async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection(
       'surveyResults',
     );
