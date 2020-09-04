@@ -15,7 +15,7 @@ import { mockValidation, mockAddSurvey } from '@/presentation/test';
 
 const mockRequest = (): HttpRequest => ({
   body: {
-    question: 'amy_question',
+    question: 'any_question',
     answers: [
       {
         image: 'any_image',
