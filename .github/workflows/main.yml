@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - run: npm install
       - run: npm test
       - name: Heroku Deploy
         uses: akhileshns/heroku-deploy@v3.4.6 # This is the action
