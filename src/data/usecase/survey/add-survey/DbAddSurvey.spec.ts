@@ -1,20 +1,19 @@
-import MockDate from 'mockdate';
 import { DbAddSurvey } from './DbAddSurvey';
-import { AddSurveyRepository } from './DbAddSurveyProtocols';
-import { throwError, mockAddSuveyParams } from '@/domain/test';
-import { mockAddSurveyRepository } from '@/data/test';
+import { AddSurveyRepositorySpy } from '@/data/test';
+import { throwError, mockAddSurveyParams } from '@/domain/test';
+import MockDate from 'mockdate';
 
 type SutTypes = {
   sut: DbAddSurvey;
-  addSurveyRepositoryStub: AddSurveyRepository;
+  addSurveyRepositorySpy: AddSurveyRepositorySpy;
 };
 
 const makeSut = (): SutTypes => {
-  const addSurveyRepositoryStub = mockAddSurveyRepository();
-  const sut = new DbAddSurvey(addSurveyRepositoryStub);
+  const addSurveyRepositorySpy = new AddSurveyRepositorySpy();
+  const sut = new DbAddSurvey(addSurveyRepositorySpy);
   return {
     sut,
-    addSurveyRepositoryStub,
+    addSurveyRepositorySpy,
   };
 };
 
@@ -28,21 +27,18 @@ describe('DbAddSurvey Usecase', () => {
   });
 
   test('Should call AddSurveyRepository with correct values', async () => {
-    const { sut, addSurveyRepositoryStub } = makeSut();
-    const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add');
-    const suveyData = mockAddSuveyParams();
-    await sut.add(suveyData);
-
-    expect(addSpy).toHaveBeenCalledWith(suveyData);
+    const { sut, addSurveyRepositorySpy } = makeSut();
+    const surveyData = mockAddSurveyParams();
+    await sut.add(surveyData);
+    expect(addSurveyRepositorySpy.addSurveyParams).toEqual(surveyData);
   });
 
   test('Should throw if AddSurveyRepository throws', async () => {
-    const { sut, addSurveyRepositoryStub } = makeSut();
+    const { sut, addSurveyRepositorySpy } = makeSut();
     jest
-      .spyOn(addSurveyRepositoryStub, 'add')
+      .spyOn(addSurveyRepositorySpy, 'add')
       .mockImplementationOnce(throwError);
-
-    const promise = sut.add(mockAddSuveyParams());
+    const promise = sut.add(mockAddSurveyParams());
     await expect(promise).rejects.toThrow();
   });
 });

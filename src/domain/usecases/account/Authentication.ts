@@ -4,5 +4,5 @@ export type AuthenticationParams = {
 };
 
 export type Authentication = {
-  auth(authentication: AuthenticationParams): Promise<string>;
+  auth(authenticationParams: AuthenticationParams): Promise<string>;
 };

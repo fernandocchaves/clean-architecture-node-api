@@ -27,7 +27,7 @@ export class AuthMiddleware implements Middleware {
           this.role,
         );
         if (account) {
-          return ok({ account_id: account.id });
+          return ok({ accountId: account.id });
         }
       }
 

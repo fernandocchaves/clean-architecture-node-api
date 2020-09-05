@@ -1,12 +1,13 @@
-import { Collection } from 'mongodb';
 import { LogMongoRepository } from './LogMongoRepository';
-import { MongoHelper } from '@/infra/db/mongodb//helpers/MongoHelper';
+import { MongoHelper } from '../helpers/MongoHelper';
+import { Collection } from 'mongodb';
+import faker from 'faker';
 
 const makeSut = (): LogMongoRepository => {
   return new LogMongoRepository();
 };
 
-describe('LogMongoRespository', () => {
+describe('LogMongoRepository', () => {
   let errorCollection: Collection;
 
   beforeAll(async () => {
@@ -22,9 +23,9 @@ describe('LogMongoRespository', () => {
     await errorCollection.deleteMany({});
   });
 
-  test('Should create an error log on succes', async () => {
+  test('Should create an error log on success', async () => {
     const sut = makeSut();
-    await sut.logError('any_error');
+    await sut.logError(faker.random.words());
     const count = await errorCollection.countDocuments();
     expect(count).toBe(1);
   });
