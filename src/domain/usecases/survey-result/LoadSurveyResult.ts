@@ -8,5 +8,5 @@ export type SaveSurveyResultParams = {
 };
 
 export type LoadSurveyResult = {
-  load(usrveyId: string): Promise<SurveyResultModel>;
+  load(usrveyId: string, accountId: string): Promise<SurveyResultModel>;
 };
